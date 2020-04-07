@@ -87,9 +87,9 @@ func CompareNormalized(version1, version2, operator string) bool {
 // CompareSimple compares two normalizated version number strings
 //
 // Just the same of CompareVersion but return a int result, 0 if both version
-// are equal, 1 if the right side is bigger and -1 if the right side is lower
+// are equal, 1 if the left side is bigger or -1 if the right side is bigger
 //
-// Usage
+// Usage:
 //     version.CompareSimple("1.2", "1.0.1")
 //     Returns: 1
 //
@@ -114,20 +114,20 @@ func CompareSimple(version1, version2 string) int {
 			}
 		}
 
-		r = 0
-		if i < len1 {
-			r = numVersion(v1[i])
-		}
-
 		l = 0
-		if i < len2 {
-			l = numVersion(v2[i])
+		if i < len1 {
+			l = numVersion(v1[i])
 		}
 
-		if r < l {
-			return -1
-		} else if r > l {
+		r = 0
+		if i < len2 {
+			r = numVersion(v2[i])
+		}
+
+		if l > r {
 			return 1
+		} else if r > l {
+			return -1
 		}
 	}
 
